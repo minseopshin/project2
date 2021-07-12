@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+  
+<mapper namespace="kr.co.project.dao.User_CouponDao">
+  <insert id="check">
+    insert into user_coupon(userid, couponid, pubDate, expDate) values(#{param1}, #{param2}, #{param3}, #{param4})
+  </insert>
+  <select id="get_birth" resultType="String">
+    select birth from member where userid=#{param1}
+  </select>
+  <select id="birth_chk" resultType="Integer"> 
+    <!-- <![CDATA[select count(*) from member where birth>=date_sub(birth, interval 7 DAY) and not birth<curdate() and userid=#{param1}]]>  -->
+    <![CDATA[select count(*) from member where right(birth,5) >= right(date_sub(birth,interval 7 day),5) and not right(birth,5) < right(curdate(),5) and userid=#{param1}]]>
+  </select>
+  <select id="birth_exp" resultType="String">
+    select concat(left(CURDATE(),4),"-",right(date_add(birth, interval 7 day),5)) from member where userid=#{param1};    
+  </select>
+  <select id="get_couponid" resultType="String">
+    select couponid from coupon where id=#{param1}
+  </select>
+</mapper>

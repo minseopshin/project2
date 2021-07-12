@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+  
+<mapper namespace="kr.co.project.dao.BoardDao">
+  <select id="pwd_check" resultType="Integer">
+    select count(*) from board
+    where pwd=#{pwd} and id=#{id}
+  </select>
+  <delete id="delete">
+    delete from board where id=#{param1}
+  </delete>
+  <select id="get_pwd" resultType="String">
+    select pwd from board where id=#{param1}
+  </select>
+  <update id="update_ok" parameterType="kr.co.project.dto.BoardDto">
+    update board set name=#{name},title=#{title},content=#{content}
+    where id=#{id}
+  </update>
+  <select id="update"  resultType="kr.co.project.dto.BoardDto">
+    select * from board where id=#{param1}
+  </select>
+  <update id="readnum">
+    update board set readnum=readnum+1 where id=#{param1}
+  </update>
+  <select id="content"  resultType="kr.co.project.dto.BoardDto">
+    select * from board where id=#{param1}
+  </select> 
+  <insert id="write" parameterType="kr.co.project.dto.BoardDto">
+     insert into board(name,title,content,writeday)
+     values(#{name},#{title},#{content},now())
+  </insert>
+  <select id="list" resultType="kr.co.project.dto.BoardDto">
+     select * from board where #{param1} like concat("%",#{param2},"%") order by id desc limit #{param3},10
+  </select> 
+
+   <!-- 전체 페이지 구하기 
+  <select id="get_pagecnt" resultType="Integer">
+    select ceil(count(*)/10) from board
+  </select>  -->
+
+
+  <!-- 전체 페이지 구하기 -->
+  <select id="get_pagecnt" resultType="Integer">
+    select ceil(count(*)/10) from board
+  </select>
+  
+    <select id="get_pagecnt2" resultType="Integer">
+    select ceil(count(*)/10) from board2
+   
+  </select>
+  
+  <!-- ★1대일문의 게시판 listanswer -->
+    <select id="listanswer" resultType="kr.co.project.dto.BoardDto2">
+select * from board2 where #{param1} like concat("%",#{param2},"%") order by id desc limit #{param3},10
+  </select> 
+
+    <insert id="writeanswer" parameterType="kr.co.project.dto.BoardDto2">
+     insert into board2(name,title,content,writeday)
+     values(#{name},#{title},#{content},now())
+  </insert>
+    <update id="readnumanswer">
+    update board2 set readnum=readnum+1 where id=#{param1}
+  </update>
+  <select id="contentanswer"  resultType="kr.co.project.dto.BoardDto2">
+    select * from board2 where id=#{param1}
+  </select> 
+    <update id="updateanswer_ok" parameterType="kr.co.project.dto.BoardDto2">
+    update board2 set name=#{name},title=#{title},content=#{content}
+    where id=#{id}
+  </update>
+  <select id="updateanswer"  resultType="kr.co.project.dto.BoardDto2">
+    select * from board2 where id=#{param1}
+  </select>
+    <delete id="deleteanswer">
+    delete from board2 where id=#{param1}
+  </delete>
+  
+</mapper>

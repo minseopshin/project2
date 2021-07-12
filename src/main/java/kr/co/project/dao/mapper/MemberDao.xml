@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+  
+<mapper namespace="kr.co.project.dao.MemberDao">
+  <select id="userid_check" resultType="Integer">
+    select count(*) from member where userid=#{param1}
+  </select>
+  <select id="login_ok" resultType="kr.co.project.dto.MemberDto">
+    select * from member where userid=#{userid} and pwd=#{pwd} 
+  </select>
+    <select id="member_ok" resultType="kr.co.project.dto.MemberDto">
+   insert into member(userid,name,pwd,phone,email,addr1,addr2,addr3,zipcode,birth)
+   values(#{userid},#{name},#{pwd},#{phone},#{email},#{addr1},#{addr2},#{addr3},#{zipcode},#{birth})
+</select>
+  	<!-- 아이디 찾기 -->
+ 
+
+	
+	<select id="userid_ok" resultType="String" parameterType="kr.co.project.dto.MemberDto">
+		select userid from member where email = #{email} and phone=#{phone}
+	</select>
+	
+	<select id="pwd_ok" resultType="String" parameterType="kr.co.project.dto.MemberDto">
+		select pwd from member where email = #{email} and phone=#{phone} and userid = #{userid}
+	</select>
+	    <select id="mypage_ok" resultType="kr.co.project.dto.MemberDto"> 
+   update member set email=#{email}, address=#{address}, phone=#{phone}, name=#{name} where userid=#{userid}
+
+</select>
+	    <select id="changepwd_ok" resultType="kr.co.project.dto.MemberDto">
+   
+   update member set pwd=#{pwd} where userid=#{userid}
+  
+</select>
+	<select id="mypage" resultType="kr.co.project.dto.MemberDto" >
+		select * from member where userid= #{param1} 	</select>
+	<select id="changepwd" resultType="kr.co.project.dto.MemberDto" >
+		select * from member where userid= #{param1} 	</select>
+	<select id="changepwd2" resultType="kr.co.project.dto.MemberDto" >
+		select * from member where userid= #{param1} 	</select>
+	<select id="changepwd2_ok" resultType="kr.co.project.dto.MemberDto"> 
+   update member set pwd=#{pwd} where userid=#{userid}
+</select>
+	<select id="member_out" resultType="kr.co.project.dto.MemberDto"> 
+   update member set state=#{1} where userid=#{userid}
+   
+   
+
+</select>
+
+</mapper>

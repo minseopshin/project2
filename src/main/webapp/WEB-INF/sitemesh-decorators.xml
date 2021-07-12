@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/views/sitemesh">
+ <!-- 제외할 패턴 -->
+ <excludes>
+ <pattern>/login/*</pattern>
+  <pattern>/addr/insert_addr</pattern>
+  <pattern>/addr/update_addr</pattern>
+  <pattern>/addr/register_addr</pattern>
+  <pattern>/cs/*</pattern>
+  <pattern>/mypage/*</pattern>
+  <pattern>/board/*</pattern>
+  <pattern>/board2/*</pattern>
+  <pattern>/member/*</pattern>
+  <pattern>/analysis/*</pattern>
+  <pattern>/payment/use_coupon</pattern>
+ </excludes>
+ <!-- 기본 패턴 -->
+ <decorator name="default" page="layout.jsp">
+  <pattern>*</pattern> 
+ </decorator>
+ <!-- <decorator name="default" page="layout2.jsp">
+  <pattern>/analysis/*</pattern> 
+ </decorator> -->
+ 
+ <!-- 모바일 패턴 -->
+ <decorator name="mobileDefault" page="mobileDefault.jsp">
+  <pattern>/m.*.do</pattern> 
+ </decorator>
+</decorators>
+
+ 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.project.dao.PaymentDao">
+	<select id="payment_list" resultType="kr.co.project.dto.PaymentDto">
+		select ba.num,pr.* from basket as ba,product as pr where productid = pr.id and pr.id=#{param1} and userid=#{param2}
+	</select>
+	<insert id="payment_ok">
+		insert into payment (userid,product_id,addr_id,order_num,payment_method1,payment_method2,payment_method3,num,price,orderday,coupon_id) values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7},#{param8},#{param9},now(),#{param10})
+	</insert>
+	<update id="coupon_change">
+		update user_coupon set useYN = "Y" where userid =#{param1} and couponid=#{param2}
+	</update>
+	<select id="addr_list" resultType="kr.co.project.dto.AddrDto">
+		select * from addr  where userid=#{param1} 
+	</select>
+	<select id="member" resultType="kr.co.project.dto.MemberDto">
+		select * from member where userid=#{param1}
+	</select>
+	<select id="addr_list_chk" resultType="kr.co.project.dto.AddrDto">
+		select * from addr where id=#{param1}
+	</select>
+	<select id="order_com" resultType="kr.co.project.dto.PaymentDto">
+		select * from payment where userid=#{param1} order by id desc limit 1 ;
+	</select>
+	<insert id="payment_order_ok" >
+		insert into payment_order(product_id,num,order_num) values(#{param1},#{param2},#{param3})
+	</insert>
+	<select id="use_coupon" resultType="kr.co.project.dto.CouponDto">
+		select * from user_coupon as uc,coupon as c where uc.couponid = c.couponid and userid= #{param1} and useYN = "N"
+	</select>
+	<select id="coupon_cnt" resultType="Integer">
+		select count(*) from user_coupon where userid = #{param1}
+	</select>
+	<select id="orderday_search" resultType="kr.co.project.dto.PaymentDto">
+		select orderday,order_num from payment group by orderday,order_num order by orderday desc limit #{param1},3;
+	</select>
+	<select id="order_search" resultType="kr.co.project.dto.PaymentDto">
+		select payment.*,product.prd_name,product.prd_img,product.price as p from payment,product where payment.product_id=product.id order by orderday desc ; 
+	</select>
+	<select id="order_detail_cnt" resultType="Integer">
+		select count(*) from (select count(*),orderday,order_num from payment where userid = #{parma1} group by orderday,order_num) as n;
+	</select>
+	<select id="order_detail_detail1" resultType="kr.co.project.dto.PaymentDto">
+		select payment.*,product.prd_name,product.prd_img,product.price as p from payment,product where payment.product_id=product.id and order_num = #{param1} and orderday=#{param2}; 
+	</select>
+	<select id="order_detail_detail2" resultType="kr.co.project.dto.PaymentDto">
+		select * from payment,coupon where payment.coupon_id = coupon.couponid and order_num = #{param1} and orderday=#{param2} limit 1; 
+	</select>
+	<select id="order_detail_coupon" resultType="kr.co.project.dto.CouponDto">
+		select * from coupon where couponid = #{param1}
+	</select>
+	<update id="basket_num">
+		update basket set num = #{param1} where productid=#{param2} and userid = #{param3} 
+	</update>
+	<select id="payment_content" resultType="kr.co.project.dto.ProductDto">
+		select * from product where id=#{param1}
+	</select>
+</mapper>

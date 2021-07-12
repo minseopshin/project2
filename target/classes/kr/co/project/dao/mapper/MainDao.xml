@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.project.dao.MainDao">
+	<select id="new_product" resultType="kr.co.project.dto.ProductDto">
+		select * from product order by regdate desc limit 5
+	</select>
+	<select id="best_readnum" resultType="kr.co.project.dto.ProductDto">
+		select * from product order by readnum desc limit 5
+	</select>
+	<select id="recom_cate1" resultType="kr.co.project.dto.ProductDto">
+		select category2,sum(readnum) as catenum from product group by category2 order by catenum desc limit 1
+	</select>
+	<select id="recom_cate2" resultType="kr.co.project.dto.ProductDto">
+		select category2,sum(readnum) as catenum from product group by category2 order by catenum desc limit 1,1
+	</select>
+	<select id="recom_product1" resultType="kr.co.project.dto.ProductDto">
+		select * from product where category2 = #{param1} order by readnum desc limit 5
+	</select>
+	<select id="recom_product2" resultType="kr.co.project.dto.ProductDto">
+		select * from product where category2 = #{param1} order by readnum desc limit 5
+	</select>
+	<select id="coupon" resultType="kr.co.project.dto.CouponDto">
+		select * from coupon limit 3
+	</select>
+	<select id="search1" resultType="kr.co.project.dto.ProductDto">
+		select * from product where prd_name like #{param1} order by heart desc limit #{param2},12
+	</select>
+	<select id="search2" resultType="kr.co.project.dto.ProductDto">
+		select * from product where prd_name like #{param1} order by regdate desc limit #{param2},12
+	</select>
+	<select id="search3" resultType="kr.co.project.dto.ProductDto">
+		select *,sum(num) as cnt_num from product as p left outer join payment_order as po on(p.id = po.product_id) where prd_name like #{param1} group by p.id order by cnt_num desc limit #{param2},12
+	</select>
+	<select id="search4" resultType="kr.co.project.dto.ProductDto">
+		select * from product where prd_name like #{param1} order by price limit #{param2},12
+	</select>
+	<select id="search5" resultType="kr.co.project.dto.ProductDto">
+		select * from product where prd_name like #{param1} order by price desc limit #{param2},12
+	</select>
+	<select id="search6" resultType="kr.co.project.dto.ProductDto">
+		select * from product where prd_name like #{param1} and category2=#{param2} order by heart desc limit #{param3},12
+	</select>
+	<select id="search7" resultType="kr.co.project.dto.ProductDto">
+		select * from product where prd_name like #{param1} and category2=#{param2} order by regdate desc limit #{param3},12
+	</select>
+	<select id="search8" resultType="kr.co.project.dto.ProductDto">
+		select *,sum(num) as cnt_num from product as p left outer join payment_order as po on(p.id = po.product_id) where prd_name like #{param1} and category2=#{param2} order by cnt_num desc limit #{param3},12
+	</select>
+	<select id="search9" resultType="kr.co.project.dto.ProductDto">
+		select * from product where prd_name like #{param1} and category2=#{param2} order by price limit #{param3},12
+	</select>
+	<select id="search0" resultType="kr.co.project.dto.ProductDto">
+		select * from product where prd_name like #{param1} and category2=#{param2}order by price desc limit #{param3},12
+	</select>
+	<select id="search_cnt1" resultType="Integer">
+		select count(*) from product where prd_name like #{param1}
+	</select>
+	<select id="search_cnt2" resultType="Integer">
+		select count(*) from product where prd_name like #{param1} and category2=#{param2}
+	</select>
+	<select id="total_cnt" resultType="Integer">
+		select count(*) from product where prd_name like #{param1}
+	</select>
+	<select id="search_category" resultType="kr.co.project.dto.ProductDto">
+		select category2,count(*) as catenum from product where prd_name like #{param1} group by category2;
+	</select>
+	
+</mapper>

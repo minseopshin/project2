@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+<mapper namespace="kr.co.project.dao.AnalysisDao">
+	<select id="product_cnt" resultType="Integer">
+		select count(*) from product
+	</select>
+	<select id="total_sale" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT SUM(sale) AS p FROM (SELECT SUM(payment.num*product.price) AS sale FROM payment,product WHERE product.id = payment.product_id and orderday= #{param1} GROUP BY product.id) AS b; 
+	</select> 
+	<select id="best_item" resultType="kr.co.project.dto.AnalysisDto">
+		select product.prd_name, sum(payment.price) as p from payment,product where payment.product_id = product.id AND orderday= #{param1} group by product.id LIMIT 1 
+	</select>
+	<select id="pie_10" resultType="Integer">
+		SELECT COUNT(*) FROM member WHERE birth BETWEEN #{param1} AND #{param2}
+	</select>
+	<select id="pie_20" resultType="Integer">
+		SELECT COUNT(*) FROM member WHERE birth BETWEEN #{param1} AND #{param2}
+	</select>
+	<select id="pie_30" resultType="Integer">
+		SELECT COUNT(*) FROM member WHERE birth BETWEEN #{param1} AND #{param2}
+	</select>
+	<select id="pie_40" resultType="Integer">
+		SELECT COUNT(*) FROM member WHERE birth BETWEEN #{param1} AND #{param2}
+	</select>
+	<select id="pie_50" resultType="Integer">
+		SELECT COUNT(*) FROM member WHERE birth BETWEEN #{param1} AND #{param2}
+	</select>
+	<select id="pie_100" resultType="Integer">
+		SELECT COUNT(*) FROM member 
+	</select>
+	<select id="top_rank" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,SUM(num) as n, sum(price*num) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then "0" else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday =#{param1}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p desc limit 3;
+	</select>
+	<select id="top_rank_volume" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,SUM(num) as n, sum(price*num) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then "0" else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday =#{param1}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY n desc limit 3;
+	</select>
+	<select id="price_graph1" resultType="Integer">
+		SELECT SUM(sale) AS p FROM (SELECT SUM(payment.num*product.price) AS sale FROM payment,product WHERE product.id = payment.product_id and orderday= #{param1} GROUP BY product.id) AS b;
+	</select>
+	<select id="price_graph2" resultType="Integer">
+		SELECT SUM(sale) AS p FROM (SELECT SUM(payment.num*product.price) AS sale FROM payment,product WHERE product.id = payment.product_id and orderday= #{param1} GROUP BY product.id) AS b;
+	</select>
+	<select id="price_graph3" resultType="Integer">
+		SELECT SUM(sale) AS p FROM (SELECT SUM(payment.num*product.price) AS sale FROM payment,product WHERE product.id = payment.product_id and orderday= #{param1} GROUP BY product.id) AS b;
+	</select>
+	<select id="price_graph4" resultType="Integer">
+		SELECT SUM(sale) AS p FROM (SELECT SUM(payment.num*product.price) AS sale FROM payment,product WHERE product.id = payment.product_id and orderday= #{param1} GROUP BY product.id) AS b;
+	</select>
+	<select id="price_graph5" resultType="Integer">
+		SELECT SUM(sale) AS p FROM (SELECT SUM(payment.num*product.price) AS sale FROM payment,product WHERE product.id = payment.product_id and orderday= #{param1} GROUP BY product.id) AS b;
+	</select>
+	<select id="price_graph6" resultType="Integer">
+		SELECT SUM(sale) AS p FROM (SELECT SUM(payment.num*product.price) AS sale FROM payment,product WHERE product.id = payment.product_id and orderday= #{param1} GROUP BY product.id) AS b;
+	</select>
+	<select id="price_graph7" resultType="Integer">
+		SELECT SUM(sale) AS p FROM (SELECT SUM(payment.num*product.price) AS sale FROM payment,product WHERE product.id = payment.product_id and orderday= #{param1} GROUP BY product.id) AS b;
+	</select>
+	<select id="analysis_prd_cnt" resultType="Integer">
+		select count(*) from product where category1 = #{param1} and category2 = #{param2}
+	</select>
+	<select id="insert_6m1" resultType="Integer">
+		select sum(round(price/1000)) as p from (SELECT price,order_num FROM payment WHERE orderday BETWEEN #{param1} AND #{param2} group by order_num,price) as a 
+	</select>
+	<select id="insert_prd_6m1_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT *,sum(p1) AS p,sum(num) as n FROM (SELECT  payment.num,product.id,product.prd_name,product.prd_img,product.readnum, (payment.num*product.price) AS p1 FROM payment,product WHERE  payment.product_id=product.id and orderday BETWEEN #{param1} AND #{param2}) AS n group by id ORDER BY p DESC limit 5;
+	</select>
+	<select id="insert_prd_6m1_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p asc limit 5;
+	</select>
+	<select id="insert_6m2" resultType="Integer">
+		select sum(round(price/1000)) as p from (SELECT price,order_num FROM payment WHERE orderday BETWEEN #{param1} AND #{param2} group by order_num,price) as a 
+	</select>
+	<select id="insert_prd_6m2_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT *,sum(p1) AS p,sum(num) as n FROM (SELECT  payment.num,product.id,product.prd_name,product.prd_img,product.readnum, (payment.num*product.price) AS p1 FROM payment,product WHERE  payment.product_id=product.id and orderday BETWEEN #{param1} AND #{param2}) AS n group by id ORDER BY p DESC limit 5;
+	</select>
+	<select id="insert_prd_6m2_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p asc limit 5;
+	</select>
+	<select id="insert_3m1" resultType="Integer">
+		select sum(round((1+price)/1000)) as p from (SELECT price,order_num FROM payment WHERE orderday BETWEEN #{param1} AND #{param2} group by order_num,price) as a
+	</select>
+	<select id="insert_prd_3m1_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT *,sum(p1) AS p,sum(num) as n FROM (SELECT  payment.num,product.id,product.prd_name,product.prd_img,product.readnum, (payment.num*product.price) AS p1 FROM payment,product WHERE  payment.product_id=product.id and orderday BETWEEN #{param1} AND #{param2}) AS n group by id ORDER BY p DESC limit 5;
+	</select>
+	<select id="insert_prd_3m1_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p asc limit 5;
+	</select>
+	<select id="insert_3m2" resultType="Integer">
+		select sum(round(price/1000)) as p from (SELECT price,order_num FROM payment WHERE orderday BETWEEN #{param1} AND #{param2} group by order_num,price) as a 
+	</select>
+	<select id="insert_prd_3m2_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT *,sum(p1) AS p,sum(num) as n FROM (SELECT  payment.num,product.id,product.prd_name,product.prd_img,product.readnum, (payment.num*product.price) AS p1 FROM payment,product WHERE  payment.product_id=product.id and orderday BETWEEN #{param1} AND #{param2}) AS n group by id ORDER BY p DESC limit 5;
+	</select>
+	<select id="insert_prd_3m2_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p asc limit 5;
+	</select>
+	<select id="insert_3m3" resultType="Integer">
+		select sum(round(price/1000)) as p from (SELECT price,order_num FROM payment WHERE orderday BETWEEN #{param1} AND #{param2} group by order_num,price) as a 
+	</select>
+	<select id="insert_prd_3m3_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT *,sum(p1) AS p,sum(num) as n FROM (SELECT  payment.num,product.id,product.prd_name,product.prd_img,product.readnum, (payment.num*product.price) AS p1 FROM payment,product WHERE  payment.product_id=product.id and orderday BETWEEN #{param1} AND #{param2}) AS n group by id ORDER BY p DESC limit 5;
+	</select>
+	<select id="insert_prd_3m3_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p asc limit 5;
+	</select>
+	<select id="insert_3m4" resultType="Integer">
+		select sum(round(price/1000)) as p from (SELECT price,order_num FROM payment WHERE orderday BETWEEN #{param1} AND #{param2} group by order_num,price) as a 
+	</select>
+	<select id="insert_prd_3m4_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT *,sum(p1) AS p,sum(num) as n FROM (SELECT  payment.num,product.id,product.prd_name,product.prd_img,product.readnum, (payment.num*product.price) AS p1 FROM payment,product WHERE  payment.product_id=product.id and orderday BETWEEN #{param1} AND #{param2}) AS n group by id ORDER BY p DESC limit 5;
+	</select>
+	<select id="insert_prd_3m4_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p asc limit 5;
+	</select>
+	<select id="insert_month" resultType="kr.co.project.dto.AnalysisDto">
+		select month,sum(price) as p from (SELECT (num*product.price) as price,MID(orderday,1,7) as month FROM product, payment where product.id = payment.product_id) as j group by month order by month
+	</select>
+	<select id="insert_month_prd_best" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT *,sum(p1) AS p,sum(num) as n FROM (SELECT  payment.num,product.id,product.prd_name,product.prd_img,product.readnum, (payment.num*product.price) AS p1 FROM payment,product WHERE  payment.product_id=product.id and orderday between #{param1} and #{param2}) AS n group by id ORDER BY p DESC limit 5;
+	</select>
+	<select id="insert_month_prd_worst" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,MID(orderday,1,7) as month, (n*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num, case when payment.orderday is null then #{param1} else payment.orderday end as orderday,product.price,case when sum(num) is null then 0 else sum(num) end as n from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id GROUP BY id) AS u GROUP BY id ORDER BY n asc limit 5
+	</select>
+	<select id="insert_week" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT start,end,date,sum(price)as p from (select DATE_FORMAT(DATE_SUB(`orderday`, INTERVAL (DAYOFWEEK(`orderday`)-2) DAY), '%Y-%m-%d') as start, DATE_FORMAT(DATE_SUB(`orderday`, INTERVAL (DAYOFWEEK(`orderday`)-8) DAY), '%Y-%m-%d') as end, DATE_FORMAT(`orderday`, '%U') AS `date`, (num*product.price) as price  FROM payment,product where payment.product_id=product.id and orderday between #{param1} and #{param2}) as j group by start,end,date
+	</select>
+	<select id="insert_week_start_end" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT DATE_FORMAT(DATE_SUB(`orderday`, INTERVAL (DAYOFWEEK(`orderday`)-2) DAY), '%Y-%m-%d') as start, DATE_FORMAT(DATE_SUB(`orderday`, INTERVAL (DAYOFWEEK(`orderday`)-8) DAY), '%Y-%m-%d') as end, DATE_FORMAT(`orderday`, '%U') AS `date`, sum(`price`) AS p FROM payment GROUP BY date order by start desc
+	</select>
+	<select id="insert_week_start" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT DATE_FORMAT(DATE_SUB(`orderday`, INTERVAL (DAYOFWEEK(`orderday`)-2) DAY), '%Y-%m-%d') as start, DATE_FORMAT(DATE_SUB(`orderday`, INTERVAL (DAYOFWEEK(`orderday`)-8) DAY), '%Y-%m-%d') as end, DATE_FORMAT(`orderday`, '%U') AS `date`, sum(`price`) AS p FROM payment GROUP BY date order by start desc limit 1
+	</select>
+	<select id="insert_week_start2" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * FROM (SELECT DATE_FORMAT(DATE_SUB(`orderday`, INTERVAL (DAYOFWEEK(`orderday`)-2) DAY), '%Y-%m-%d') as start, DATE_FORMAT(DATE_SUB(`orderday`, INTERVAL (DAYOFWEEK(`orderday`)-8) DAY), '%Y-%m-%d') as end, DATE_FORMAT(`orderday`, '%U') AS `date`, sum(`price`) AS price FROM payment GROUP BY DATE)AS a WHERE START=#{param1} order by start desc LIMIT 1
+	</select>
+	<select id="insert_week_prd_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT *,sum(p1) AS p,sum(num) as n FROM (SELECT  payment.num,product.id,product.prd_name,product.prd_img,product.readnum, (payment.num*product.price) AS p1 FROM payment,product WHERE  payment.product_id=product.id and orderday BETWEEN #{param1} AND #{param2}) AS n group by id ORDER BY p DESC limit 5;
+	</select>
+	<select id="insert_week_prd_worst" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,sum(num) as num, sum(price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then "0" else payment.num end as num,case when payment.price is null then "0" else payment.price end as price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num asc limit 5;
+	</select>
+	<select id="insert_day" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT date,sum(price) as p from(SELECT DATE(`orderday`) AS `date`,(num*product.price) as price FROM payment,product where payment.product_id = product.id) AS a WHERE date BETWEEN #{param1} AND #{param2} group by date order by date 
+	</select>
+	<select id="insert_day_prd_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT *,sum(p1) AS p,sum(num) as n FROM (SELECT  payment.num,product.id,product.prd_name,product.prd_img,product.readnum, (payment.num*product.price) AS p1 FROM payment,product WHERE  payment.product_id=product.id and orderday = #{param1}) AS n group by id ORDER BY p DESC limit 5;
+	</select>
+	<select id="insert_day_prd_worst" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday =#{param1}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p asc limit 5;
+	</select>
+	<select id="insert_volume_6m1" resultType="Integer">
+		SELECT SUM(num) AS num FROM payment WHERE  orderday BETWEEN '2021-01-01' AND '2021-06-30' 
+	</select>
+	<select id="insert_volume_6m1_prd_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num desc limit 5;
+	</select>
+	<select id="insert_volume_6m1_prd_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num asc limit 5;
+	</select>
+	<select id="insert_volume_6m2" resultType="Integer">
+		SELECT SUM(num) AS num FROM payment WHERE  orderday BETWEEN '2021-07-01' AND '2021-12-31' 
+	</select>
+	<select id="insert_volume_6m2_prd_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num desc limit 5;
+	</select>
+	<select id="insert_volume_6m2_prd_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num asc limit 5;
+	</select>
+	<select id="insert_volume_3m1" resultType="Integer">
+		SELECT SUM(num) AS num FROM payment WHERE  orderday BETWEEN #{param1} AND #{param2} 
+	</select>
+	<select id="insert_volume_prd_3m1_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num desc limit 5;
+	</select>
+	<select id="insert_volume_prd_3m1_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num asc limit 5;
+	</select>
+	<select id="insert_volume_3m2" resultType="Integer">
+		SELECT SUM(num) AS num FROM payment WHERE  orderday BETWEEN #{param1} AND #{param2}
+	</select>
+	<select id="insert_volume_prd_3m2_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num desc limit 5;
+	</select>
+	<select id="insert_volume_prd_3m2_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num asc limit 5;
+	</select>
+	<select id="insert_volume_3m3" resultType="Integer">
+		SELECT SUM(num) AS num FROM payment WHERE  orderday BETWEEN #{param1} AND #{param2} 
+	</select>
+	<select id="insert_volume_prd_3m3_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num desc limit 5;
+	</select>
+	<select id="insert_volume_prd_3m3_worst" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num asc limit 5;
+	</select>
+	<select id="insert_volume_3m4" resultType="Integer">
+		SELECT SUM(num) AS num FROM payment WHERE  orderday BETWEEN #{param1} AND #{param2} 
+	</select>
+	<select id="insert_volume_prd_3m4_best" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num desc limit 5;
+	</select>
+	<select id="insert_volume_prd_3m4_worst" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num asc limit 5;
+	</select>
+	<select id="insert_volume_month" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT MID(orderday,1,7) month, sum(num) as num FROM payment GROUP BY MONTH;
+	</select>
+	<select id="insert_volume_prd_month_best" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,MID(orderday,1,7) as month, (n*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num, case when payment.orderday is null then #{param1} else payment.orderday end as orderday,product.price,case when sum(num) is null then 0 else sum(num) end as n from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id GROUP BY id) AS u GROUP BY id ORDER BY n desc limit 5
+	</select>
+	<select id="insert_volume_prd_month_worst" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,MID(orderday,1,7) as month, (n*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num, case when payment.orderday is null then #{param1} else payment.orderday end as orderday,product.price,case when sum(num) is null then 0 else sum(num) end as n from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id GROUP BY id) AS u GROUP BY id ORDER BY n asc limit 5
+	</select>
+	<select id="insert_volume_week" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT DATE_FORMAT(DATE_SUB(`orderday`, INTERVAL (DAYOFWEEK(`orderday`)-2) DAY), '%Y-%m-%d') as start, DATE_FORMAT(DATE_SUB(`orderday`, INTERVAL (DAYOFWEEK(`orderday`)-8) DAY), '%Y-%m-%d') as end, DATE_FORMAT(`orderday`, '%U') AS `date`, sum(`num`) AS num FROM payment where orderday between #{param1} and #{param2} GROUP BY date
+	</select>
+	<select id="insert_volume_prd_week_best" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num desc limit 5;
+	</select>
+	<select id="insert_volume_prd_week_worst" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,sum(num) as num, sum(price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then "0" else payment.num end as num,case when payment.price is null then "0" else payment.price end as price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num asc limit 5;
+	</select>
+	<select id="insert_volume_day" resultType="kr.co.project.dto.AnalysisDto">
+		 SELECT orderday, sum(num) as num FROM payment where orderday between #{param1} and #{param2} GROUP BY orderday order by orderday;
+	</select>
+	<select id="insert_volume_prd_day_best" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday =#{param1}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num desc limit 5;
+	</select>
+	<select id="insert_volume_prd_day_worst" resultType="kr.co.project.dto.AnalysisDto">
+		SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday from product left outer JOIN (SELECT * FROM payment WHERE orderday =#{param1}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY num asc limit 5;
+	</select>
+	<select id="product_cate1" resultType="kr.co.project.dto.ProductDto">
+		select category1 from product group by category1
+	</select>
+	<select id="product_cate2" resultType="kr.co.project.dto.ProductDto">
+		select distinct category2 from product where category1 = #{param1}
+	</select>
+	<select id="product_cate3_d" resultType="kr.co.project.dto.ProductDto">
+		SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday FROM (SELECT * from product WHERE category1 = #{param2} and category2 = #{param3}) AS product left outer JOIN (SELECT * FROM payment WHERE orderday =#{param1}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p desc limit #{param4},7;
+	</select>
+	<select id="product_cate3_w" resultType="kr.co.project.dto.ProductDto">
+		SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday FROM (SELECT * from product WHERE category1 = #{param3} and category2 = #{param4}) AS product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p desc limit #{param5},7;
+	</select>
+	<select id="product_cate3_m" resultType="kr.co.project.dto.ProductDto">
+		SELECT * ,sum(num) as n, sum(num*price) as p FROM (SELECT product.id,product.prd_name,product.prd_img,product.readnum,case when payment.num is null then 0 else payment.num end as num,product.price, case when payment.orderday is null then #{param1} else payment.orderday end as orderday FROM (SELECT * from product WHERE category1 = #{param3} and category2 = #{param4}) AS product left outer JOIN (SELECT * FROM payment WHERE orderday between #{param1} and #{param2}) AS payment ON product.id = payment.product_id) AS b  GROUP BY b.id ORDER BY p desc limit #{param5},7;
+	</select>
+	
+	
+	<!-- 상품 시작 -->
+  <insert id="product_write_ok">
+    insert into product(prd_name, price, prd_img, category1, category2, regdate) values(#{prd_name}, #{price}, #{prd_img}, #{category1}, #{category2}, now());
+    insert into product_detail(prd_name, detail_img) values(#{prd_name}, #{detail_img});    
+  </insert>
+  <select id="product_detail" resultType="kr.co.project.dto.ProductDto">
+    select * from product where prd_name=#{prd_name}
+  </select>
+  <update id="product_detail_ok" parameterType="kr.co.project.dto.ProductDto">
+    update product_detail set id=#{id} where prd_name=#{prd_name}
+  </update>
+  <select id="product_info" resultType="kr.co.project.dto.ProductDto">
+    select * from product where id=#{param1}
+  </select>
+  <select id="product_update" resultType="kr.co.project.dto.ProductDto">
+    select * from product where id=#{param1} 
+  </select>
+  <update id="product_update_ok" parameterType="kr.co.project.dto.ProductDto">
+    update product set prd_name=#{prd_name}, price=#{price}, category1=#{category1}, category2=#{category2}, prd_img=#{prd_img} where id=#{id};
+    update product_detail set prd_name=#{prd_name}, detail_img=#{detail_img} where id=#{id};
+  </update>
+  <select id="bcate" resultType="kr.co.project.dto.ProductDto">
+      select category1 from product group by category1 order by id asc
+    </select>
+    <select id="scate" resultType="kr.co.project.dto.ProductDto">
+      select category2 from product where category1=#{parameter} group by category2 order by id asc
+    </select>
+  <select id="plist" resultType="kr.co.project.dto.ProductDto">
+    select * from product where ${param1} like concat('%',#{param2},'%') order by id desc limit ${param3}, 10    
+  </select>
+  <select id="list" resultType="kr.co.project.dto.ProductDto">
+    select * from product order by id desc    
+  </select>
+  <delete id="detail_delete">
+    delete from product_detail where id=#{param1}
+  </delete>
+  <delete id="prd_delete">
+    delete from product where id=#{param1}
+  </delete>
+    <!-- 페이지 구하기 -->
+  <select id="get_pagecnt" resultType="Integer">
+    select ceil(count(*)/10) from product
+  </select>
+<!-- 상품 끝 -->
+
+<!-- 결제 시작 -->  
+  <select id="olist" resultType="kr.co.project.dto.PaymentDto">
+    select * from payment where ${param1} like concat('%',#{param2},'%') group by order_num order by id desc limit ${param3}, 10    
+  </select>  
+  <select id="get_orderpagecnt" resultType="Integer">
+    select ceil(count(*)/10) from payment
+  </select>
+  <select id="order_state" resultType="kr.co.project.dto.PaymentDto">
+    select * from payment where id=#{param1} 
+  </select>
+  <select id="state" resultType="kr.co.project.dto.PaymentDto">
+    select state from payment where id=#{param1} order by state desc
+  </select>
+  <update id="order_state_ok">
+    update payment set state=#{state} where order_num=#{order_num}
+  </update>
+<!-- 결제 끝 -->
+
+<!-- 쿠폰 시작 -->
+  <insert id="coupon_write_ok">
+    insert into coupon(couponid, name, state, dc, coupon_img) values(#{couponid}, #{name}, #{state}, #{dc}, #{coupon_img})
+  </insert>
+  <select id="couponid_check" resultType="Integer">
+    select count(*) from coupon where couponid=#{param1}
+  </select>
+  <select id="clist" resultType="kr.co.project.dto.CouponDto">
+    select * from coupon where ${param1} like concat('%',#{param2},'%') order by id desc limit ${param3}, 10    
+  </select>
+  <select id="get_couponpagecnt" resultType="Integer">
+    select ceil(count(*)/10) from coupon
+  </select>
+  <delete id="coupon_delete">
+    delete from coupon where id=#{param1}
+  </delete>
+<!-- 쿠폰 끝 -->
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+  
+<mapper namespace="kr.co.project.dao.EventDao">
+  <insert id="event_review_write_ok" parameterType="kr.co.project.dto.EventDto">
+    insert into event_review(userid,title,content,fname,writeday) values(#{userid},#{title},#{content},#{fname},now())
+  </insert>
+ 
+  <select id="list" resultType="kr.co.project.dto.EventDto">
+    select * from event_review where ${param1} like concat('%',#{param2},'%') order by id desc limit ${param3}, 10    
+  </select>
+  
+  <!-- 페이지 구하기 -->
+  <select id="get_pagecnt" resultType="Integer">
+    select ceil(count(*)/10) from event_review
+  </select>
+  
+  <update id="readnum">
+    update event_review set readnum=readnum+1 where id=#{param1}
+  </update>
+  <select id="event_review_content" resultType="kr.co.project.dto.EventDto">
+    select * from event_review where id=#{param1}
+  </select>
+  <select id="event_review_update" resultType="kr.co.project.dto.EventDto">
+    select * from event_review where id=#{param1}
+  </select>
+  <update id="event_review_update_ok">
+    update event_review set title=#{title},content=#{content},fname=#{fname} where id=#{id}
+  </update>
+  <delete id="erdelete">
+    delete from event_review where id=#{param1}
+  </delete>
+</mapper>

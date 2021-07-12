@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+
+<mapper namespace="kr.co.project.dao.ProductDao"> 
+	
+	<select id="plist" resultType="kr.co.project.dto.ProductDto">
+		select * from product order by id desc limit #{param1},30
+	</select>
+	<select id="leftmenu" resultType="kr.co.project.dto.ProductDto">
+		select id,category1 from product group by category1 order by id asc
+	</select>
+	<select id="topmenu" resultType="kr.co.project.dto.ProductDto">
+		select id,category1,category2 from product where category1="${_parameter}" group by category2 order by id ASC
+	</select>
+	<select id="content" resultType="kr.co.project.dto.ProductDto">
+		select * from product where id=#{param1}
+	</select>
+	<select id="plist2" resultType="kr.co.project.dto.ProductDto">
+		select * from product where category2=#{param1} order by id desc limit #{param2},30
+	</select>
+	<select id="plist3" resultType="kr.co.project.dto.ProductDto">
+		select * from product where category1=#{param1} order by id desc limit #{param2},30
+	</select>
+	<update id="readnum">
+		update product set readnum=readnum+1 where id=#{param1}
+	</update>
+	<select id="get_pagecnt" resultType="Integer">
+	   select ceil(count(*)/30) from product
+	 </select>
+	 <select id="get_pagecnt2" resultType="Integer">
+	   select ceil(count(*)/30) from product where category2=#{param}
+	 </select>
+	 <select id="get_pagecnt3" resultType="Integer">
+	   select ceil(count(*)/30) from product where category1=#{param}
+	 </select>
+	
+	<select resultType="kr.co.project.dto.ProductDto" id="hlist">
+		select * from product order by heart desc limit 6 
+		</select>
+	<select resultType="kr.co.project.dto.ProductDto" id="rlist"> 
+		select * from product order by readnum desc limit 6 
+	</select>
+	<select id="new_prd" resultType="kr.co.project.dto.ProductDto">
+		select * from product order by regdate desc limit 12;
+	</select>
+	<select id="heart_prd" resultType="kr.co.project.dto.ProductDto">
+		select * from product order by heart desc limit 12;
+	</select>
+	<select resultType="kr.co.project.dto.DetailDto" id="detail_list">
+		select * from product_detail where id=#{param} 
+	</select>
+	
+</mapper>
+
+
+
+
+
