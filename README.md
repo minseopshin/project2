@@ -19,136 +19,27 @@
 
 ### 담당 파일
 * [controller](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller)
-  *[AddrController](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller/AddrController.java)
-AnalysisController.java
-BasketController.java
-
-BoardController.java
-
-EventController.java
-
-MainController.java
-
-MemberController.java
-
-PaymentController.java
-
-ProductController.java
+  * [AddrController](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller/AddrController.java)
+  * [AnalysisController](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller/AnalysisController.java)
+  * [BasketController](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller/BasketController.java)
+  * [MainController](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller/MainController.java)
+  * [PaymentController](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller/PaymentController.java)
 * [dao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao)
-  *AddrDao.java
-first commit
-last month
-AnalysisDao.java
-first commit
-last month
-BasketDao.java
-first commit
-last month
-BoardDao.java
-first commit
-last month
-CouponDao.java
-first commit
-last month
-EventDao.java
-first commit
-last month
-HeartDao.java
-first commit
-last month
-MainDao.java
-first commit
-last month
-MemberDao.java
-first commit
-last month
-PaymentDao.java
-first commit
-last month
-ProductDao.java
-
-QnaDao.java
-
-ReviewDao.java
-
-User_CouponDao.java
+  * [AddrDao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/AddrDao.java)
+  * [AnalysisDao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/AnalysisDao.java)
+  * [BasketDao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/BasketDao.java)
+  * [MainDao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/MainDao.java)
+  * [PaymentDao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/PaymentDao.java)
 * [mapper](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/mapper)
-* AddrDao.xml
-first commit
-last month
-AnalysisDao.xml
-first commit
-last month
-BasketDao.xml
-first commit
-last month
-BoardDao.xml
-first commit
-last month
-CouponDao.xml
-first commit
-last month
-EventDao.xml
-first commit
-last month
-HeartDao.xml
-first commit
-last month
-MainDao.xml
-first commit
-last month
-MemberDao.xml
-first commit
-last month
-PaymentDao.xml
-first commit
-last month
-ProductDao.xml
-first commit
-last month
-QnaDao.xml
-first commit
-last month
-ReviewDao.xml
-first commit
-last month
-User_CouponDao.xml
+  * [AddrDao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/mapper/AddrDao.xml)
+  * [AnalysisDao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/mapper/AnalysisDao.xml)
+  * [BasketDao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/mapper/BasketDao.xml)
+  * [MainDao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/mapper/MainDao.xml)
+  * [PaymentDao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/mapper/PaymentDao.xml)
 * [dto](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dto)
 * [jsp](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views)
-  * addr
-first commit
-last month
-analysis
-first commit
-last month
-board
-first commit
-last month
-board2
-first commit
-last month
-cs
-first commit
-last month
-event
-first commit
-last month
-login
-first commit
-last month
-main
-first commit
-last month
-member
-first commit
-last month
-mypage
-first commit
-last month
-payment
-first commit
-last month
-product
-first commit
-last month
-sitemesh
+  * [addr](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views/addr)
+  * [analysis](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views/analysis)
+  * [main](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views/main)
+  * [payment](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views/payment)
+  * [sitemesh](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views/sitemesh)
