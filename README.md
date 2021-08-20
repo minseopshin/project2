@@ -18,7 +18,22 @@
 9. 팀장 역할 : DB 환경구축, 제작 된 파일점검, 팀원들의 제작 된 파일연결
 
 ### 담당 파일
-* [controller](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller), dao, dto, mapper
+* [controller](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller)
+  *AddrController.java
+AnalysisController.java
+BasketController.java
+
+BoardController.java
+
+EventController.java
+
+MainController.java
+
+MemberController.java
+
+PaymentController.java
+
+ProductController.java
 * [dao](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao)
 * [mapper](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dao/mapper)
 * [dto](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dto)
