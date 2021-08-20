@@ -49,3 +49,7 @@
   * [main](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views/main)
   * [payment](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views/payment)
   * [sitemesh](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views/sitemesh)
+
+### 영상
+* [전체](https://youtu.be/2_sbLSwkUWY)
+* [담당부분](https://youtu.be/jisLOda-o_s)
