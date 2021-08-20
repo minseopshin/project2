@@ -114,5 +114,5 @@ first commit
 last month
 User_CouponDao.xml
 * [dto](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dto)
-* jsp
+* [jsp](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views)
   * a
