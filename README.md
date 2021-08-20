@@ -19,7 +19,7 @@
 
 ### 담당 파일
 * [controller](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller)
-  *AddrController.java
+  *[AddrController](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/controller/AddrController.java)
 AnalysisController.java
 BasketController.java
 
@@ -115,4 +115,40 @@ last month
 User_CouponDao.xml
 * [dto](https://github.com/minseopshin/project2/tree/master/src/main/java/kr/co/project/dto)
 * [jsp](https://github.com/minseopshin/project2/tree/master/src/main/webapp/WEB-INF/views)
-  * a
+  * addr
+first commit
+last month
+analysis
+first commit
+last month
+board
+first commit
+last month
+board2
+first commit
+last month
+cs
+first commit
+last month
+event
+first commit
+last month
+login
+first commit
+last month
+main
+first commit
+last month
+member
+first commit
+last month
+mypage
+first commit
+last month
+payment
+first commit
+last month
+product
+first commit
+last month
+sitemesh
